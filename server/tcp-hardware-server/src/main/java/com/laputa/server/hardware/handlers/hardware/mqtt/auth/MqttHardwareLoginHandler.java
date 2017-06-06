@@ -1,0 +1,107 @@
+package com.laputa.server.hardware.handlers.hardware.mqtt.auth;
+
+import com.laputa.server.Holder;
+import com.laputa.server.core.dao.TokenValue;
+import com.laputa.server.core.model.DashBoard;
+import com.laputa.server.core.model.auth.Session;
+import com.laputa.server.core.model.auth.User;
+import com.laputa.server.core.protocol.handlers.DefaultExceptionHandler;
+import com.laputa.server.core.session.HardwareStateHolder;
+import com.laputa.server.handlers.DefaultReregisterHandler;
+import com.laputa.server.handlers.common.HardwareNotLoggedHandler;
+import com.laputa.server.hardware.handlers.hardware.MqttHardwareHandler;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.mqtt.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static com.laputa.server.core.protocol.enums.Command.HARDWARE_CONNECTED;
+import static io.netty.handler.codec.mqtt.MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD;
+
+/**
+ * Handler responsible for managing hardware and apps login messages.
+ * Initializes netty channel with a state tied with user.
+ *
+ * The Laputa Project.
+ * Created by Sommer
+ * Created on 2/1/2015.
+ *
+ */
+@ChannelHandler.Sharable
+public class MqttHardwareLoginHandler extends SimpleChannelInboundHandler<MqttConnectMessage> implements DefaultReregisterHandler, DefaultExceptionHandler {
+
+    private static final Logger log = LogManager.getLogger(DefaultExceptionHandler.class);
+
+    private static final MqttConnAckMessage ACCEPTED = createConnAckMessage(MqttConnectReturnCode.CONNECTION_ACCEPTED);
+
+    private final Holder holder;
+
+    public MqttHardwareLoginHandler(Holder holder) {
+        this.holder = holder;
+    }
+
+    private static void completeLogin(Channel channel, Session session, User user, DashBoard dash, int deviceId, int msgId) {
+        log.debug("completeLogin. {}", channel);
+
+        session.addHardChannel(channel);
+        channel.writeAndFlush(ACCEPTED);
+
+        session.sendToApps(HARDWARE_CONNECTED, msgId, dash.id, deviceId);
+
+        log.info("{} mqtt hardware joined.", user.email);
+    }
+
+    private static MqttConnAckMessage createConnAckMessage(MqttConnectReturnCode code) {
+        MqttFixedHeader mqttFixedHeader = new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 2);
+        MqttConnAckVariableHeader mqttConnAckVariableHeader = new MqttConnAckVariableHeader(code, true);
+        return new MqttConnAckMessage(mqttFixedHeader, mqttConnAckVariableHeader);
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, MqttConnectMessage message) throws Exception {
+        String username = message.payload().userName().toLowerCase();
+        String token = message.payload().password();
+
+        final TokenValue tokenValue = holder.tokenManager.getUserByToken(token);
+
+        if (tokenValue == null || !tokenValue.user.email.equalsIgnoreCase(username)) {
+            log.debug("MqttHardwareLogic token is invalid. Token '{}', '{}'", token, ctx.channel().remoteAddress());
+            ctx.writeAndFlush(createConnAckMessage(CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD), ctx.voidPromise());
+            return;
+        }
+
+        final User user = tokenValue.user;
+        final int dashId = tokenValue.dashId;
+        final int deviceId = tokenValue.deviceId;
+
+        DashBoard dash = user.profile.getDashById(dashId);
+        if (dash == null) {
+            log.warn("User : {} requested token {} for non-existing {} dash id.", user.email, token, dashId);
+            ctx.writeAndFlush(createConnAckMessage(CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD), ctx.voidPromise());
+            return;
+        }
+
+        ctx.pipeline().remove(this);
+        ctx.pipeline().remove(HardwareNotLoggedHandler.class);
+        HardwareStateHolder hardwareStateHolder = new HardwareStateHolder(dashId, deviceId, user, token);
+        ctx.pipeline().addLast("HHArdwareMqttHandler", new MqttHardwareHandler(holder, hardwareStateHolder));
+
+        Session session = holder.sessionDao.getOrCreateSessionByUser(hardwareStateHolder.userKey, ctx.channel().eventLoop());
+
+        if (session.initialEventLoop != ctx.channel().eventLoop()) {
+            log.debug("Re registering hard channel. {}", ctx.channel());
+            reRegisterChannel(ctx, session, channelFuture -> completeLogin(channelFuture.channel(), session, user, dash, deviceId, -1));
+        } else {
+            completeLogin(ctx.channel(), session, user, dash, deviceId, -1);
+        }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        handleGeneralException(ctx, cause);
+    }
+
+}

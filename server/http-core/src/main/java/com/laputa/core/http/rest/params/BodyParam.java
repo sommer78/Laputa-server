@@ -1,0 +1,52 @@
+package com.laputa.core.http.rest.params;
+
+import com.laputa.core.http.MediaType;
+import com.laputa.core.http.rest.URIDecoder;
+import com.laputa.utils.JsonParser;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import io.netty.channel.ChannelHandlerContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * The Laputa Project.
+ * Created by Sommer
+ * Created on 09.12.15.
+ */
+public class BodyParam extends Param {
+
+    private static final Logger log = LogManager.getLogger(BodyParam.class);
+
+    private final String expectedContentType;
+
+    public BodyParam(String name, Class<?> type, String expectedContentType) {
+        super(name, type);
+        this.expectedContentType = expectedContentType;
+    }
+
+    @Override
+    public Object get(ChannelHandlerContext ctx, URIDecoder uriDecoder) {
+        if (uriDecoder.contentType == null || !uriDecoder.contentType.contains(expectedContentType)) {
+            throw new RuntimeException("Unexpected content type. Expecting " + expectedContentType + ".");
+        }
+
+        switch (expectedContentType) {
+            case MediaType.APPLICATION_JSON :
+                String data = "";
+                try {
+                    data = uriDecoder.getContentAsString();
+                    return JsonParser.mapper.readValue(data, type);
+                } catch (JsonParseException | JsonMappingException jsonParseError) {
+                    log.warn("Error parsing body param : '{}'.", data);
+                    throw new RuntimeException("Error parsing body param. " + data);
+                } catch (Exception e) {
+                    log.error("Unexpected error during parsing body param.", e);
+                    throw new RuntimeException("Unexpected error during parsing body param.", e);
+                }
+            default :
+                return uriDecoder.getContentAsString();
+        }
+    }
+
+}

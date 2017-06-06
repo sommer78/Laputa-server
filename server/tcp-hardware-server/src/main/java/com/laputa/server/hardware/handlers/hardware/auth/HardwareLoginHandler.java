@@ -1,0 +1,140 @@
+package com.laputa.server.hardware.handlers.hardware.auth;
+
+import com.laputa.server.Holder;
+import com.laputa.server.core.BlockingIOProcessor;
+import com.laputa.server.core.dao.TokenValue;
+import com.laputa.server.core.model.DashBoard;
+import com.laputa.server.core.model.auth.Session;
+import com.laputa.server.core.model.auth.User;
+import com.laputa.server.core.model.device.Device;
+import com.laputa.server.core.protocol.handlers.DefaultExceptionHandler;
+import com.laputa.server.core.protocol.model.messages.appllication.LoginMessage;
+import com.laputa.server.core.session.HardwareStateHolder;
+import com.laputa.server.handlers.DefaultReregisterHandler;
+import com.laputa.server.handlers.common.HardwareNotLoggedHandler;
+import com.laputa.server.hardware.handlers.hardware.HardwareHandler;
+import com.laputa.server.redis.RedisClient;
+import com.laputa.utils.IPUtils;
+import com.laputa.utils.StringUtils;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static com.laputa.server.core.protocol.enums.Command.*;
+import static com.laputa.server.core.protocol.enums.Response.INVALID_TOKEN;
+import static com.laputa.utils.BlynkByteBufUtil.*;
+
+/**
+ * Handler responsible for managing hardware and apps login messages.
+ * Initializes netty channel with a state tied with user.
+ *
+ * The Laputa Project.
+ * Created by Sommer
+ * Created on 2/1/2015.
+ *
+ */
+@ChannelHandler.Sharable
+public class HardwareLoginHandler extends SimpleChannelInboundHandler<LoginMessage> implements DefaultReregisterHandler, DefaultExceptionHandler {
+
+    private static final Logger log = LogManager.getLogger(DefaultExceptionHandler.class);
+
+    private static final int HARDWARE_PIN_MODE_MSG_ID = 1;
+
+    private final Holder holder;
+    private final RedisClient redisClient;
+    private final BlockingIOProcessor blockingIOProcessor;
+    private final String listenPort;
+
+    public HardwareLoginHandler(Holder holder, int listenPort) {
+        this.holder = holder;
+        this.redisClient = holder.redisClient;
+        this.blockingIOProcessor = holder.blockingIOProcessor;
+        this.listenPort = String.valueOf(listenPort);
+    }
+
+    private static void completeLogin(Channel channel, Session session, User user, DashBoard dash, int deviceId, int msgId) {
+        log.debug("completeLogin. {}", channel);
+
+        session.addHardChannel(channel);
+        channel.write(ok(msgId));
+
+        final String body = dash.buildPMMessage(deviceId);
+        if (dash.isActive && body.length() > 2) {
+            channel.write(makeASCIIStringMessage(HARDWARE, HARDWARE_PIN_MODE_MSG_ID, body));
+        }
+
+        channel.flush();
+
+        session.sendToApps(HARDWARE_CONNECTED, msgId, dash.id, deviceId);
+        Device device = dash.getDeviceById(deviceId);
+        if (device != null) {
+            log.trace("Connected device id {}, dash id {}", deviceId, dash.id);
+            device.connected();
+            device.lastLoggedIP = IPUtils.getIp(channel);
+        }
+
+        log.info("{} hardware joined.", user.email);
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, LoginMessage message) throws Exception {
+        final String token = message.body.trim();
+        final TokenValue tokenValue = holder.tokenManager.getUserByToken(token);
+
+        //no user on current server, trying to find server that user belongs to.
+        if (tokenValue == null) {
+            //checkUserOnOtherServer(ctx, token, message.id);
+            log.debug("HardwareLogic token is invalid. Token '{}', '{}'", token, ctx.channel().remoteAddress());
+            ctx.writeAndFlush(makeResponse(message.id, INVALID_TOKEN), ctx.voidPromise());
+            return;
+        }
+
+        final User user = tokenValue.user;
+        final int dashId = tokenValue.dashId;
+        final int deviceId = tokenValue.deviceId;
+
+        DashBoard dash = user.profile.getDashById(dashId);
+        if (dash == null) {
+            log.warn("User : {} requested token {} for non-existing {} dash id.", user.email, token, dashId);
+            ctx.writeAndFlush(makeResponse(message.id, INVALID_TOKEN), ctx.voidPromise());
+            return;
+        }
+
+        ctx.pipeline().remove(this);
+        ctx.pipeline().remove(HardwareNotLoggedHandler.class);
+        HardwareStateHolder hardwareStateHolder = new HardwareStateHolder(dashId, deviceId, user, token);
+        ctx.pipeline().addLast("HHArdwareHandler", new HardwareHandler(holder, hardwareStateHolder));
+
+        Session session = holder.sessionDao.getOrCreateSessionByUser(hardwareStateHolder.userKey, ctx.channel().eventLoop());
+
+        if (session.initialEventLoop != ctx.channel().eventLoop()) {
+            log.debug("Re registering hard channel. {}", ctx.channel());
+            reRegisterChannel(ctx, session, channelFuture -> completeLogin(channelFuture.channel(), session, user, dash, deviceId, message.id));
+        } else {
+            completeLogin(ctx.channel(), session, user, dash, deviceId, message.id);
+        }
+    }
+
+    private void checkUserOnOtherServer(ChannelHandlerContext ctx, String token, int msgId) {
+        blockingIOProcessor.executeDB(() -> {
+            String server = redisClient.getServerByToken(token);
+            // no server found, that's means token is wrong.
+            if (server == null || server.equals(holder.host)) {
+                log.debug("HardwareLogic token is invalid. Token '{}', '{}'", token, ctx.channel().remoteAddress());
+                ctx.writeAndFlush(makeResponse(msgId, INVALID_TOKEN), ctx.voidPromise());
+            } else {
+                log.info("Redirecting token '{}', '{}' to {}", token, ctx.channel().remoteAddress(), server);
+                ctx.writeAndFlush(makeASCIIStringMessage(CONNECT_REDIRECT, msgId, server + StringUtils.BODY_SEPARATOR + listenPort), ctx.voidPromise());
+            }
+        });
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        handleGeneralException(ctx, cause);
+    }
+
+}

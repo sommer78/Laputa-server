@@ -1,0 +1,71 @@
+package com.laputa.server.core.reporting.average;
+
+import com.laputa.server.core.model.enums.GraphType;
+
+import java.io.Serializable;
+import java.util.Comparator;
+
+/**
+ * The Laputa Project.
+ * Created by Sommer
+ * Created on 10.08.15.
+ */
+public final class AggregationKey implements Serializable {
+
+    public static final Comparator<AggregationKey> AGGREGATION_KEY_COMPARATOR = (o1, o2) -> (int) (o1.ts - o2.ts);
+
+    public final String email;
+    public final String appName;
+    public final int dashId;
+    public final int deviceId;
+    public final char pinType;
+    public final byte pin;
+    public final long ts;
+
+    public AggregationKey(String email, String appName, int dashId, int deviceId, char pinType, byte pin, long ts) {
+        this.email = email;
+        this.appName = appName;
+        this.dashId = dashId;
+        this.deviceId = deviceId;
+        this.pinType = pinType;
+        this.pin = pin;
+        this.ts = ts;
+    }
+
+    public long getTs(GraphType type) {
+        return ts * type.period;
+    }
+
+    public boolean isOutdated(long nowTruncatedToPeriod) {
+        return ts < nowTruncatedToPeriod;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AggregationKey)) return false;
+
+        AggregationKey that = (AggregationKey) o;
+
+        if (dashId != that.dashId) return false;
+        if (deviceId != that.deviceId) return false;
+        if (pinType != that.pinType) return false;
+        if (pin != that.pin) return false;
+        if (ts != that.ts) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        return !(appName != null ? !appName.equals(that.appName) : that.appName != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = email != null ? email.hashCode() : 0;
+        result = 31 * result + (appName != null ? appName.hashCode() : 0);
+        result = 31 * result + dashId;
+        result = 31 * result + deviceId;
+        result = 31 * result + (int) pinType;
+        result = 31 * result + (int) pin;
+        result = 31 * result + (int) (ts ^ (ts >>> 32));
+        return result;
+    }
+}

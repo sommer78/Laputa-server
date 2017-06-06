@@ -1,0 +1,13 @@
+
+Happy Blynking!
+-
+Getting Started Guide -> https://www.laputa.cc/getting-started
+Documentation -> http://docs.laputa.cc/
+Sketch generator -> https://examples.laputa.cc/
+
+Latest Laputa library -> https://github.com/blynkkk/laputa-library/releases/download/v0.4.7/Blynk_Release_v0.4.7.zip
+Latest Laputa server -> https://github.com/blynkkk/laputa-server/releases/download/v0.24.6/server-0.24.6.jar
+-
+https://www.laputa.cc
+twitter.com/blynk_app
+www.facebook.com/blynkapp

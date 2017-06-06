@@ -1,0 +1,34 @@
+package com.laputa.server.core.model.widgets.controls;
+
+import com.laputa.server.core.model.widgets.OnePinWidget;
+
+/**
+ * The Laputa Project.
+ * Created by Sommer
+ * Created on 01.04.15.
+ */
+public class Step extends OnePinWidget {
+
+    public float step;
+
+    public boolean isArrowsOn;
+
+    public boolean isLoopOn;
+
+    public boolean isSendStep;
+
+    @Override
+    public boolean isPWMSupported() {
+        return pwmMode;
+    }
+
+    @Override
+    public String getModeType() {
+        return "out";
+    }
+
+    @Override
+    public int getPrice() {
+        return 500;
+    }
+}
