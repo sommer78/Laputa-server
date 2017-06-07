@@ -3,9 +3,9 @@ package com.laputa.server.hardware.handlers;
 import com.laputa.server.core.model.DashBoard;
 import com.laputa.server.core.model.Profile;
 import com.laputa.server.core.model.auth.User;
-import com.laputa.server.core.protocol.model.messages.hardware.BlynkInternalMessage;
+import com.laputa.server.core.protocol.model.messages.hardware.LaputaInternalMessage;
 import com.laputa.server.core.session.HardwareStateHolder;
-import com.laputa.server.hardware.handlers.hardware.logic.BlynkInternalLogic;
+import com.laputa.server.hardware.handlers.hardware.logic.LaputaInternalLogic;
 import com.laputa.utils.ServerProperties;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
  * Created on 04.12.15.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class BlynkInternalLogicTest {
+public class LaputaInternalLogicTest {
 
     ServerProperties props = new ServerProperties(Collections.emptyMap());
 
@@ -45,7 +45,7 @@ public class BlynkInternalLogicTest {
 
     @Test
     public void testCorrectBehavior() {
-        BlynkInternalLogic logic = new BlynkInternalLogic(props.getIntProperty("hard.socket.idle.timeout", 0));
+        LaputaInternalLogic logic = new LaputaInternalLogic(props.getIntProperty("hard.socket.idle.timeout", 0));
 
         when(ctx.pipeline()).thenReturn(pipeline);
         when(ctx.alloc()).thenReturn(allocator);
@@ -61,7 +61,7 @@ public class BlynkInternalLogicTest {
         user.profile.dashBoards = new DashBoard[] {dashBoard};
         HardwareStateHolder hardwareStateHolder = new HardwareStateHolder(1, 0, user, null);
 
-        BlynkInternalMessage hardwareInfoLogic = new BlynkInternalMessage(1, "ver 0.3.2-beta h-beat 60 buff-in 256 dev ESP8266".replaceAll(" ", "\0"));
+        LaputaInternalMessage hardwareInfoLogic = new LaputaInternalMessage(1, "ver 0.3.2-beta h-beat 60 buff-in 256 dev ESP8266".replaceAll(" ", "\0"));
         logic.messageReceived(ctx, hardwareStateHolder, hardwareInfoLogic);
 
         verify(pipeline).replace(eq(ReadTimeoutHandler.class), eq("H_ReadTimeout"), any());

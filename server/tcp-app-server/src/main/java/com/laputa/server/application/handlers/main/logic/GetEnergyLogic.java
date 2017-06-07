@@ -5,7 +5,7 @@ import com.laputa.server.core.protocol.model.messages.StringMessage;
 import io.netty.channel.ChannelHandlerContext;
 
 import static com.laputa.server.core.protocol.enums.Command.GET_ENERGY;
-import static com.laputa.utils.BlynkByteBufUtil.makeASCIIStringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeASCIIStringMessage;
 
 /**
  * The Laputa Project.

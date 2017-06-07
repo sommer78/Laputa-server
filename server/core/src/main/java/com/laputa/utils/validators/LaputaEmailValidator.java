@@ -5,7 +5,7 @@ package com.laputa.utils.validators;
  * Created by Sommer
  * Created on 09.03.17.
  */
-public class BlynkEmailValidator {
+public class LaputaEmailValidator {
 
     public static boolean isNotValidEmail(String email) {
         return email == null || email.isEmpty() || email.length() > 255 ||

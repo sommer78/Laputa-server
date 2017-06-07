@@ -12,7 +12,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 import static com.laputa.utils.AppStateHolderUtil.getAppState;
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * The Laputa Project.

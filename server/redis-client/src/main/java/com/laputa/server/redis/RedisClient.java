@@ -40,8 +40,8 @@ public class RedisClient implements Closeable {
         if (isEnabled) {
             JedisPoolConfig config = new JedisPoolConfig();
             config.setMaxTotal(10);
-            this.userPool = new JedisPool(config, host, port, Protocol.DEFAULT_TIMEOUT, pass, USER_DB_INDEX);
-            this.tokenPool = new JedisPool(config, host, port, Protocol.DEFAULT_TIMEOUT, pass, TOKEN_DB_INDEX);
+            this.userPool = new JedisPool(config, host, port, Protocol.DEFAULT_TIMEOUT, null, USER_DB_INDEX);
+            this.tokenPool = new JedisPool(config, host, port, Protocol.DEFAULT_TIMEOUT, null, TOKEN_DB_INDEX);
             checkConnected();
             log.info("Redis pool successfully initialized on {}:{}", host, port);
         } else {

@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 
 import static com.laputa.server.core.protocol.enums.Command.HARDWARE;
-import static com.laputa.utils.BlynkByteBufUtil.makeUTF8StringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeUTF8StringMessage;
 
 /**
  * The Laputa Project.

@@ -17,7 +17,7 @@ public class TokensPoolTest {
 
     @Test
     public void addTokenTest() {
-        final TokenUser user = new TokenUser("test.gmail.com", AppName.BLYNK);
+        final TokenUser user = new TokenUser("test.gmail.com", AppName.LAPUTA);
         final String token = "123";
         final TokensPool tokensPool = new TokensPool(expirationPeriod);
         tokensPool.addToken(token, user);
@@ -26,7 +26,7 @@ public class TokensPoolTest {
 
     @Test
     public void addTokenTwiceTest() {
-        final TokenUser user = new TokenUser("test.gmail.com", AppName.BLYNK);
+        final TokenUser user = new TokenUser("test.gmail.com", AppName.LAPUTA);
         final String token = "123";
         final TokensPool tokensPool = new TokensPool(expirationPeriod);
         tokensPool.addToken(token, user);
@@ -36,7 +36,7 @@ public class TokensPoolTest {
 
     @Test
     public void remoteTokenTest() {
-        final TokenUser user = new TokenUser("test.gmail.com", AppName.BLYNK);
+        final TokenUser user = new TokenUser("test.gmail.com", AppName.LAPUTA);
         final String token = "123";
         final TokensPool tokensPool = new TokensPool(expirationPeriod);
         tokensPool.addToken(token, user);

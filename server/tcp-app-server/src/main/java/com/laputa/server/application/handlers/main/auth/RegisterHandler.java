@@ -15,7 +15,7 @@ import com.laputa.server.core.protocol.model.messages.appllication.RegisterMessa
 import com.laputa.server.workers.timer.TimerWorker;
 import com.laputa.utils.JsonParser;
 import com.laputa.utils.TokenGeneratorUtil;
-import com.laputa.utils.validators.BlynkEmailValidator;
+import com.laputa.utils.validators.LaputaEmailValidator;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.laputa.server.core.protocol.enums.Response.USER_ALREADY_REGISTERED;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 
 /**
  * Process register message.
@@ -81,10 +81,10 @@ public class RegisterHandler extends SimpleChannelInboundHandler<RegisterMessage
 
         String email = messageParts[0].trim().toLowerCase();
         String pass = messageParts[1];
-        String appName = messageParts.length == 3 ? messageParts[2] : AppName.BLYNK;
+        String appName = messageParts.length == 3 ? messageParts[2] : AppName.LAPUTA;
         log.info("Trying register user : {}, app : {}", email, appName);
 
-        if (BlynkEmailValidator.isNotValidEmail(email)) {
+        if (LaputaEmailValidator.isNotValidEmail(email)) {
             log.error("Register Handler. Wrong email: {}", email);
             ctx.writeAndFlush(illegalCommand(message.id), ctx.voidPromise());
             return;
@@ -112,7 +112,7 @@ public class RegisterHandler extends SimpleChannelInboundHandler<RegisterMessage
     }
 
     private void createProjectForExportedApp(User newUser, String appName) {
-        if (appName.equals(AppName.BLYNK)) {
+        if (appName.equals(AppName.LAPUTA)) {
             return;
         }
 

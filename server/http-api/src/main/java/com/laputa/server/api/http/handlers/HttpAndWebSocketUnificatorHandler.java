@@ -44,7 +44,7 @@ import static com.laputa.core.http.Response.redirect;
 @ChannelHandler.Sharable
 public class HttpAndWebSocketUnificatorHandler extends ChannelInboundHandlerAdapter implements DefaultExceptionHandler {
 
-    private final static String BLYNK_LANDING = "https://www.laputa.cc";
+    private final static String LAPUTA_LANDING = "https://www.laputa.com";
 
     private final String region;
     private final GlobalStats stats;
@@ -106,7 +106,7 @@ public class HttpAndWebSocketUnificatorHandler extends ChannelInboundHandlerAdap
                 if (region.equals("local")) {
                     ctx.writeAndFlush(redirect(rootPath));
                 } else {
-                    ctx.writeAndFlush(redirect(BLYNK_LANDING));
+                    ctx.writeAndFlush(redirect(LAPUTA_LANDING));
                 }
             } finally {
                 req.release();

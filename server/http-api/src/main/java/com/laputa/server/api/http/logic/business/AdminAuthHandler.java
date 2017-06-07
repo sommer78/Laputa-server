@@ -49,7 +49,7 @@ public class AdminAuthHandler extends BaseHttpHandler {
             return redirect(rootPath);
         }
 
-        User user = userDao.getByName(email, AppName.BLYNK);
+        User user = userDao.getByName(email, AppName.LAPUTA);
 
         if (user == null || !user.isSuperAdmin) {
             return redirect(rootPath);

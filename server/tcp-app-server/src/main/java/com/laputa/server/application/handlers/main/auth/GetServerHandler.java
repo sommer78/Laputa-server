@@ -6,12 +6,12 @@ import com.laputa.server.core.dao.UserDao;
 import com.laputa.server.core.protocol.model.messages.appllication.GetServerMessage;
 import com.laputa.server.redis.RedisClient;
 import com.laputa.utils.StringUtils;
-import com.laputa.utils.validators.BlynkEmailValidator;
+import com.laputa.utils.validators.LaputaEmailValidator;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 
 
 /**
@@ -54,7 +54,7 @@ public class GetServerHandler extends SimpleChannelInboundHandler<GetServerMessa
             return;
         }
 
-        if (BlynkEmailValidator.isNotValidEmail(email)) {
+        if (LaputaEmailValidator.isNotValidEmail(email)) {
             ctx.writeAndFlush(illegalCommandBody(msg.id), ctx.voidPromise());
             return;
         }

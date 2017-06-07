@@ -41,7 +41,6 @@ This is 1 byte field responsible for storing command code from client, like logi
     UPDATE_WIDGET = 34;
     DELETE_WIDGET = 35;
 
-[Full list](https://github.com/blynkkk/laputa-server/blob/master/server/core/src/main/java/cc/laputa/server/core/protocol/enums/Command.java#L11) 
 
 ### Message Id field
 Unsigned short.
@@ -72,7 +71,7 @@ Length field is a 2 bytes field for defining body length. Could be 0 if body is 
     NOTIFICATION_EXCEPTION = 15;
     
     //reserved
-     BLYNK_TIMEOUT_EXCEPTION = 16;
+     LAPUTA_TIMEOUT_EXCEPTION = 16;
      
     NO_DATA_EXCEPTION = 17;
     DEVICE_WENT_OFFLINE = 18;
@@ -83,7 +82,6 @@ Client sends commands to the server and gets response for every command sent.
 For commands (register, login, saveProfile, hardware) that doesn't request any data back - 'response' (command field 0x00) message is returned.
 For commands (loadProfile, getToken) that request data back - message will be returned with same command code. In case you sent 'loadProfile' you will receive 'loadProfile' command back with filled body.
 
-[Here is the class with all of the codes](https://github.com/blynkkk/laputa-server/blob/master/server/core/src/main/java/cc/laputa/server/core/protocol/enums/Response.java#L12).
 Response message structure:
 
 | Command       | Message Id    | Response code   |
@@ -140,7 +138,6 @@ Response message structure:
     MENU
 
 
-[List is here](https://github.com/blynkkk/laputa-server/blob/master/server/core/src/main/java/cc/laputa/server/core/model/enums/WidgetType.java#L8).
 
 ## JSON structure
 
@@ -199,9 +196,7 @@ Response message structure:
     
 ## Hardware command description
     
-Could be found [here](https://github.com/blynkkk/laputa-library/blob/master/docs/Implementing.md#hardwarebridge-command-body).
-    
+
 ## Command workflow
 
-For better understanding of how commands should be processed, please have a look in integration test 
-it is easy understand what is going on there. You may start from [this](https://github.com/blynkkk/laputa-server/blob/master/integration-tests/src/test/java/cc/laputa/integration/tcp/MainWorkflowTest.java#L78) test.
+For better understanding of how commands should be processed, please have a look in integration test

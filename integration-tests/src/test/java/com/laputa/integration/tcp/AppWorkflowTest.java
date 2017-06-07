@@ -122,7 +122,7 @@ public class AppWorkflowTest extends IntegrationBase {
         assertNotNull(app);
         assertNotNull(app.id);
 
-        clientPair.appClient.send("updateApp {\"id\":\"" + app.id  + "\",\"theme\":\"BlynkLight\",\"provisionType\":\"DYNAMIC\",\"color\":1,\"name\":\"My App 2\",\"icon\":\"myIcon2\",\"projectIds\":[1,2]}");
+        clientPair.appClient.send("updateApp {\"id\":\"" + app.id  + "\",\"theme\":\"LaputaLight\",\"provisionType\":\"DYNAMIC\",\"color\":1,\"name\":\"My App 2\",\"icon\":\"myIcon2\",\"projectIds\":[1,2]}");
         verify(clientPair.appClient.responseMock, timeout(500)).channelRead(any(), eq(ok(2)));
 
         clientPair.appClient.send("loadProfileGzipped");
@@ -135,7 +135,7 @@ public class AppWorkflowTest extends IntegrationBase {
         assertEquals(1, profile.apps.length);
         App app2 = profile.apps[0];
         assertEquals(app.id, app2.id);
-        assertEquals(Theme.BlynkLight, app2.theme);
+        assertEquals(Theme.LaputaLight, app2.theme);
         assertEquals(ProvisionType.DYNAMIC, app2.provisionType);
         assertEquals(1, app2.color);
         assertEquals("My App 2", app2.name);

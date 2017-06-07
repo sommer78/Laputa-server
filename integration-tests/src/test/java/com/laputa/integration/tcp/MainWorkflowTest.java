@@ -544,7 +544,7 @@ public class MainWorkflowTest extends IntegrationBase {
         settings.isAppConnectedOn = true;
         settings.isShared = true;
         settings.keepScreenOn = true;
-        settings.theme = Theme.BlynkLight;
+        settings.theme = Theme.LaputaLight;
 
         clientPair.appClient.send("updateSettings 1\0" + JsonParser.toJson(settings));
         verify(clientPair.appClient.responseMock, timeout(500)).channelRead(any(), eq(ok(1)));

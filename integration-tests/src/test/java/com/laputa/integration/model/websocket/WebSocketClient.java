@@ -20,7 +20,7 @@ import com.laputa.integration.model.SimpleClientHandler;
 import com.laputa.server.core.protocol.handlers.decoders.MessageDecoder;
 import com.laputa.server.core.protocol.model.messages.MessageBase;
 import com.laputa.server.core.stats.GlobalStats;
-import com.laputa.utils.BlynkByteBufUtil;
+import com.laputa.utils.LaputaByteBufUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -66,7 +66,7 @@ public final class WebSocketClient extends BaseClient {
     }
 
     private static WebSocketFrame produceWebSocketFrame(MessageBase msg) {
-        ByteBuf bb = BlynkByteBufUtil.ALLOCATOR.heapBuffer(5 + msg.length);
+        ByteBuf bb = LaputaByteBufUtil.ALLOCATOR.heapBuffer(5 + msg.length);
         bb.writeByte(msg.command);
         bb.writeShort(msg.id);
         bb.writeShort(msg.length);

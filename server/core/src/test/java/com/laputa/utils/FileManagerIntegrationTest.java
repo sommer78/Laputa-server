@@ -23,8 +23,8 @@ import static org.junit.Assert.assertNotNull;
  */
 public class FileManagerIntegrationTest {
 
-    private final User user1 = new User("name1", "pass1", AppName.BLYNK, "local", false, false);
-    private final User user2 = new User("name2", "pass2", AppName.BLYNK, "local", false, false);
+    private final User user1 = new User("name1", "pass1", AppName.LAPUTA, "local", false, false);
+    private final User user2 = new User("name2", "pass2", AppName.LAPUTA, "local", false, false);
 
     private FileManager fileManager;
 
@@ -47,7 +47,7 @@ public class FileManagerIntegrationTest {
 
         Map<UserKey, User> users = fileManager.deserializeUsers();
         assertNotNull(users);
-        assertNotNull(users.get(new UserKey(user1.email, AppName.BLYNK)));
+        assertNotNull(users.get(new UserKey(user1.email, AppName.LAPUTA)));
     }
 
     @Test
@@ -68,8 +68,8 @@ public class FileManagerIntegrationTest {
         Map<UserKey, User> users = fileManager.deserializeUsers();
         assertNotNull(users);
         assertEquals(2, users.size());
-        assertNotNull(users.get(new UserKey(user1.email, AppName.BLYNK)));
-        assertNotNull(users.get(new UserKey(user2.email, AppName.BLYNK)));
+        assertNotNull(users.get(new UserKey(user1.email, AppName.LAPUTA)));
+        assertNotNull(users.get(new UserKey(user2.email, AppName.LAPUTA)));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class FileManagerIntegrationTest {
 
         Map<UserKey, User> users = fileManager.deserializeUsers();
         assertNotNull(users);
-        assertNotNull(users.get(new UserKey(user1.email, AppName.BLYNK)));
+        assertNotNull(users.get(new UserKey(user1.email, AppName.LAPUTA)));
     }
 
 }

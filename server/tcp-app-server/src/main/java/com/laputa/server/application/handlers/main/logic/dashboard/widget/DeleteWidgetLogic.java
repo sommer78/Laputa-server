@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 import static com.laputa.utils.StringUtils.split2;
 
 /**

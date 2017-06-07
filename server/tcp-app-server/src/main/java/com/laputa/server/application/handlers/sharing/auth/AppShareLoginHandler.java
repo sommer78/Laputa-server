@@ -17,7 +17,7 @@ import io.netty.channel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 
 /**
  * Handler responsible for managing apps sharing login messages.

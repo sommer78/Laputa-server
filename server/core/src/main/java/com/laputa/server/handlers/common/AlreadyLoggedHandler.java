@@ -7,7 +7,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import static com.laputa.utils.BlynkByteBufUtil.makeResponse;
+import static com.laputa.utils.LaputaByteBufUtil.makeResponse;
 
 /**
  * The Laputa Project.

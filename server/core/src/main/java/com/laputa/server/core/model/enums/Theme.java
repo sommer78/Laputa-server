@@ -9,7 +9,7 @@ public enum Theme {
 
     laputa,
     Laputa,
-    BlynkLight,
+    LaputaLight,
     SparkFun,
     AppTheme, //should be removed in future
     CustomTheme, //should be removed in future

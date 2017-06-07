@@ -90,14 +90,14 @@
         var cmdString = commandAndBody[0];
         var cmdBody = commandAndBody.length > 1 ? commandAndBody.slice(1).join('\0') : null;
         var cmd = getCommandByString(cmdString);
-        return buildBlynkMessage(cmd, 1, cmdBody);
+        return buildLaputaMessage(cmd, 1, cmdBody);
     }
 
-    function buildBlynkMessage(cmd, msgId, cmdBody) {
-        const BLYNK_HEADER_SIZE = 5;
+    function buildLaputaMessage(cmd, msgId, cmdBody) {
+        const LAPUTA_HEADER_SIZE = 5;
         var bodyLength = (cmdBody ? cmdBody.length : 0);
 
-        var bufArray = new ArrayBuffer(BLYNK_HEADER_SIZE + bodyLength);
+        var bufArray = new ArrayBuffer(LAPUTA_HEADER_SIZE + bodyLength);
         var dataview = new DataView(bufArray);
         dataview.setInt8(0, cmd);
         dataview.setInt16(1, msgId);

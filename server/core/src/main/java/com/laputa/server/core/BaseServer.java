@@ -1,7 +1,7 @@
 package com.laputa.server.core;
 
 import com.laputa.server.transport.TransportTypeHolder;
-import com.laputa.utils.BlynkByteBufUtil;
+import com.laputa.utils.LaputaByteBufUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
@@ -52,8 +52,8 @@ public abstract class BaseServer implements Closeable {
             b.group(bossGroup, workerGroup)
                     .channel(channelClass)
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .childOption(ChannelOption.ALLOCATOR, BlynkByteBufUtil.ALLOCATOR)
-                    .option(ChannelOption.ALLOCATOR, BlynkByteBufUtil.ALLOCATOR)
+                    .childOption(ChannelOption.ALLOCATOR, LaputaByteBufUtil.ALLOCATOR)
+                    .option(ChannelOption.ALLOCATOR, LaputaByteBufUtil.ALLOCATOR)
                     .childHandler(getChannelInitializer());
 
             InetSocketAddress listenTo = (listenAddress == null || listenAddress.isEmpty()) ? new InetSocketAddress(port) : new InetSocketAddress(listenAddress, port);

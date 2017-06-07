@@ -79,7 +79,7 @@ public class HttpsAdminServerTest extends BaseTest {
 
         String name = "admin@laputa.cc";
         String pass = "admin";
-        admin = new User(name, SHA256Util.makeHash(pass, name), AppName.BLYNK, "local", false, true);
+        admin = new User(name, SHA256Util.makeHash(pass, name), AppName.LAPUTA, "local", false, true);
         holder.userDao.add(admin);
     }
 
@@ -161,7 +161,7 @@ public class HttpsAdminServerTest extends BaseTest {
         String name = "admin@laputa.cc";
         String pass = "admin";
 
-        User admin = new User(name, SHA256Util.makeHash(pass, name), AppName.BLYNK, "local", false, false);
+        User admin = new User(name, SHA256Util.makeHash(pass, name), AppName.LAPUTA, "local", false, false);
         holder.userDao.add(admin);
 
         HttpPost loginRequest = new HttpPost(httpsAdminServerUrl + "/login");

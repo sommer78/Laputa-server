@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.LOAD_PROFILE_GZIPPED;
 import static com.laputa.server.core.protocol.enums.Response.NO_DATA;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 import static com.laputa.utils.JsonParser.*;
 
 /**

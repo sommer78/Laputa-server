@@ -52,7 +52,7 @@ public class UsersLogicTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new User(TEST_USER, "123", AppName.BLYNK, "local", false, false);
+        user = new User(TEST_USER, "123", AppName.LAPUTA, "local", false, false);
         when(userDao.delete(any())).thenReturn(user);
         sessionDao.getOrCreateSessionByUser(new UserKey(user), mock(EventLoop.class));
         FileManager fileManager = new FileManager(null);
@@ -68,7 +68,7 @@ public class UsersLogicTest {
 
     @Test
     public void deleteUserByName() throws Exception {
-        Response response = usersLogic.deleteUserByName(TEST_USER + "-" + AppName.BLYNK);
+        Response response = usersLogic.deleteUserByName(TEST_USER + "-" + AppName.LAPUTA);
 
         assertEquals(OK, response.status());
         assertFalse(Files.exists(userFile));
@@ -77,7 +77,7 @@ public class UsersLogicTest {
 
     @Test
     public void deleteFakeUserByName() throws Exception {
-        Response response = usersLogic.deleteUserByName("fake user" + "-" + AppName.BLYNK);
+        Response response = usersLogic.deleteUserByName("fake user" + "-" + AppName.LAPUTA);
 
         assertEquals(NOT_FOUND, response.status());
     }

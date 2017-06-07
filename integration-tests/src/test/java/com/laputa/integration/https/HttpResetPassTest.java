@@ -63,7 +63,7 @@ public class HttpResetPassTest extends BaseTest {
         HttpPost resetPassRequest = new HttpPost(httpServerUrl + "/resetPassword");
         List <NameValuePair> nvps = new ArrayList<>();
         nvps.add(new BasicNameValuePair("email", email));
-        nvps.add(new BasicNameValuePair("appName", AppName.BLYNK));
+        nvps.add(new BasicNameValuePair("appName", AppName.LAPUTA));
         resetPassRequest.setEntity(new UrlEncodedFormEntity(nvps));
 
         try (CloseableHttpResponse response = httpclient.execute(resetPassRequest)) {

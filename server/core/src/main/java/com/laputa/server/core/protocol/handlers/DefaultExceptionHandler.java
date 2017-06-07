@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import javax.net.ssl.SSLException;
 import java.io.IOException;
 
-import static com.laputa.utils.BlynkByteBufUtil.makeResponse;
+import static com.laputa.utils.LaputaByteBufUtil.makeResponse;
 
 /**
  * The Laputa Project.

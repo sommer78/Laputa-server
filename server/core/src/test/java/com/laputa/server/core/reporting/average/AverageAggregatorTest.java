@@ -40,7 +40,7 @@ public class AverageAggregatorTest {
         AverageAggregatorProcessor averageAggregator = new AverageAggregatorProcessor("");
         User user = new User();
         user.email = "test@test.com";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
 
         char pinType = PinType.VIRTUAL.pintTypeChar;
         int dashId = 1;
@@ -69,7 +69,7 @@ public class AverageAggregatorTest {
         AverageAggregatorProcessor averageAggregator = new AverageAggregatorProcessor("");
         User user = new User();
         user.email = "test@test.com";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
         char pinType = PinType.VIRTUAL.pintTypeChar;
         int dashId = 1;
         byte pin = 1;
@@ -111,7 +111,7 @@ public class AverageAggregatorTest {
 
         User user = new User();
         user.email = "test@test.com";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
         char pinType = PinType.VIRTUAL.pintTypeChar;
         int dashId = 1;
         byte pin = 1;

@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.*;
 import static com.laputa.server.core.protocol.enums.Response.INVALID_TOKEN;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 
 /**
  * Handler responsible for managing hardware and apps login messages.

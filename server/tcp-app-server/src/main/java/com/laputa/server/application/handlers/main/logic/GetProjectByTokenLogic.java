@@ -16,8 +16,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.GET_PROJECT_BY_TOKEN;
-import static com.laputa.utils.BlynkByteBufUtil.makeBinaryMessage;
-import static com.laputa.utils.BlynkByteBufUtil.notAllowed;
+import static com.laputa.utils.LaputaByteBufUtil.makeBinaryMessage;
+import static com.laputa.utils.LaputaByteBufUtil.notAllowed;
 
 /**
  * The Laputa Project.
@@ -51,7 +51,7 @@ public class GetProjectByTokenLogic {
                 return;
             }
 
-            User publishUser = userDao.getByName(dbFlashedToken.email, AppName.BLYNK);
+            User publishUser = userDao.getByName(dbFlashedToken.email, AppName.LAPUTA);
 
             DashBoard dash = publishUser.profile.getDashById(dbFlashedToken.dashId);
 

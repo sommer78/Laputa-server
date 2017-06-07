@@ -245,7 +245,7 @@ public class AppSyncWorkflowTest extends IntegrationBase {
     }
 
     @Test
-    //https://github.com/blynkkk/laputa-server/issues/443
+
     public void testSyncWidgetValueOverlapsWithPinStorage() throws Exception {
         clientPair.hardwareClient.send("hardware vw 125 1");
         verify(clientPair.appClient.responseMock, timeout(500)).channelRead(any(), eq(new HardwareMessage(1, b("1 vw 125 1"))));

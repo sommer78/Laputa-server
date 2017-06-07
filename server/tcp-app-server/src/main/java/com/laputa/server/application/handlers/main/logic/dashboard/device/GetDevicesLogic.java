@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.GET_DEVICES;
-import static com.laputa.utils.BlynkByteBufUtil.makeUTF8StringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeUTF8StringMessage;
 
 /**
  * The Laputa Project.

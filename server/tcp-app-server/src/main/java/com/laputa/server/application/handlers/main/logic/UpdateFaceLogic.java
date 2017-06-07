@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 
-import static com.laputa.utils.BlynkByteBufUtil.notAllowed;
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.notAllowed;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * Update faces of related project.

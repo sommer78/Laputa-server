@@ -154,7 +154,7 @@ public class CommandStat {
             case HARDWARE_SYNC :
                 this.hardwareSync = val;
                 break;
-            case BLYNK_INTERNAL :
+            case LAPUTA_INTERNAL:
                 this.internal = val;
                 break;
             case ADD_PUSH_TOKEN :

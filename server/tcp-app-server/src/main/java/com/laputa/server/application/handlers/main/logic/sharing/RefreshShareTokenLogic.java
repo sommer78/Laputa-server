@@ -15,8 +15,8 @@ import io.netty.channel.ChannelHandlerContext;
 
 import static com.laputa.server.core.protocol.enums.Command.REFRESH_SHARE_TOKEN;
 import static com.laputa.utils.AppStateHolderUtil.getShareState;
-import static com.laputa.utils.BlynkByteBufUtil.makeUTF8StringMessage;
-import static com.laputa.utils.BlynkByteBufUtil.notAllowed;
+import static com.laputa.utils.LaputaByteBufUtil.makeUTF8StringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.notAllowed;
 
 /**
  * The Laputa Project.

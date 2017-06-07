@@ -37,7 +37,7 @@ public class RawDataDBTest {
         assertNotNull(dbManager.getConnection());
         user = new User();
         user.email = "test@test.com";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
     }
 
     @AfterClass

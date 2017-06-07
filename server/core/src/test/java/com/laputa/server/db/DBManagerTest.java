@@ -16,8 +16,8 @@ import com.laputa.server.db.model.Purchase;
 import com.laputa.server.db.model.Redeem;
 import com.laputa.utils.DateTimeUtils;
 import org.junit.*;
-import org.postgresql.copy.CopyManager;
-import org.postgresql.core.BaseConnection;
+//import org.postgresql.copy.CopyManager;
+//import org.postgresql.core.BaseConnection;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,12 +61,12 @@ public class DBManagerTest {
     @Before
     public void cleanAll() throws Exception {
         //clean everything just in case
-        dbManager.executeSQL("DELETE FROM users");
-        dbManager.executeSQL("DELETE FROM reporting_average_minute");
-        dbManager.executeSQL("DELETE FROM reporting_average_hourly");
-        dbManager.executeSQL("DELETE FROM reporting_average_daily");
-        dbManager.executeSQL("DELETE FROM purchase");
-        dbManager.executeSQL("DELETE FROM redeem");
+    //    dbManager.executeSQL("DELETE FROM users");
+    //    dbManager.executeSQL("DELETE FROM reporting_average_minute");
+    //    dbManager.executeSQL("DELETE FROM reporting_average_hourly");
+    //    dbManager.executeSQL("DELETE FROM reporting_average_daily");
+    //    dbManager.executeSQL("DELETE FROM purchase");
+    //    dbManager.executeSQL("DELETE FROM redeem");
     }
 
     @Test
@@ -77,8 +77,8 @@ public class DBManagerTest {
     @Test
     @Ignore("Ignoring because of travis CI")
     public void testDbVersion() throws Exception {
-        int dbVersion = dbManager.userDBDao.getDBVersion();
-        assertTrue(dbVersion >= 90500);
+        String dbVersion = dbManager.userDBDao.getDBVersion();
+        assertTrue(dbVersion.contains("5.1"));
     }
 
     @Test
@@ -159,12 +159,12 @@ public class DBManagerTest {
         try (Connection connection = dbManager.getConnection();
              Writer gzipWriter = new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(new File("/home/doom369/output.csv.gz"))), "UTF-8")) {
 
-            CopyManager copyManager = new CopyManager(connection.unwrap(BaseConnection.class));
-
-
-            String selectQuery = "select pintype || pin, ts, value from reporting_average_minute where project_id = 1 and email = 'test@gmail.com'";
-            long res = copyManager.copyOut("COPY (" + selectQuery + " ) TO STDOUT WITH (FORMAT CSV)", gzipWriter);
-            System.out.println(res);
+//            CopyManager copyManager = new CopyManager(connection.unwrap(BaseConnection.class));
+//
+//
+//            String selectQuery = "select pintype || pin, ts, value from reporting_average_minute where project_id = 1 and email = 'test@gmail.com'";
+//            long res = copyManager.copyOut("COPY (" + selectQuery + " ) TO STDOUT WITH (FORMAT CSV)", gzipWriter);
+//            System.out.println(res);
         }
 
 
@@ -199,7 +199,7 @@ public class DBManagerTest {
     public void testManyConnections() throws Exception {
         User user = new User();
         user.email = "test@test.com";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
         Map<AggregationKey, AggregationValue> map = new ConcurrentHashMap<>();
         AggregationValue value = new AggregationValue();
         value.update(1);
@@ -235,7 +235,7 @@ public class DBManagerTest {
     public void testUpsertAndSelect() throws Exception {
         ArrayList<User> users = new ArrayList<>();
         for (int i = 0; i < 10000; i++) {
-            users.add(new User("test" + i + "@gmail.com", "pass", AppName.BLYNK, "local", false, false));
+            users.add(new User("test" + i + "@gmail.com", "pass", AppName.LAPUTA, "local", false, false));
         }
         //dbManager.saveUsers(users);
         dbManager.userDBDao.save(users);
@@ -248,19 +248,19 @@ public class DBManagerTest {
     @Ignore("Ignored cause travis postgres is old and doesn't support upserts")
     public void testUpsertUser() throws Exception {
         ArrayList<User> users = new ArrayList<>();
-        User user = new User("test@gmail.com", "pass", AppName.BLYNK, "local", false, false);
+        User user = new User("test@gmail.com", "pass", AppName.LAPUTA, "local", false, false);
         user.name = "123";
         user.lastModifiedTs = 0;
         user.lastLoggedAt = 1;
         user.lastLoggedIP = "127.0.0.1";
         users.add(user);
-        user = new User("test@gmail.com", "pass", AppName.BLYNK, "local", false, false);
+        user = new User("test@gmail.com", "pass", AppName.LAPUTA, "local", false, false);
         user.lastModifiedTs = 0;
         user.lastLoggedAt = 1;
         user.lastLoggedIP = "127.0.0.1";
         user.name = "123";
         users.add(user);
-        user = new User("test2@gmail.com", "pass", AppName.BLYNK, "local", false, false);
+        user = new User("test2@gmail.com", "pass", AppName.LAPUTA, "local", false, false);
         user.lastModifiedTs = 0;
         user.lastLoggedAt = 1;
         user.lastLoggedIP = "127.0.0.1";
@@ -274,7 +274,7 @@ public class DBManagerTest {
              ResultSet rs = statement.executeQuery("select * from users where email = 'test@gmail.com'")) {
             while (rs.next()) {
                 assertEquals("test@gmail.com", rs.getString("email"));
-                assertEquals(AppName.BLYNK, rs.getString("appName"));
+                assertEquals(AppName.LAPUTA, rs.getString("appName"));
                 assertEquals("local", rs.getString("region"));
                 assertEquals("123", rs.getString("name"));
                 assertEquals("pass", rs.getString("pass"));
@@ -295,7 +295,7 @@ public class DBManagerTest {
     @Ignore("Ignored cause travis postgres is old and doesn't support upserts")
     public void testUpsertUserFieldUpdated() throws Exception {
         ArrayList<User> users = new ArrayList<>();
-        User user = new User("test@gmail.com", "pass", AppName.BLYNK, "local", false, false);
+        User user = new User("test@gmail.com", "pass", AppName.LAPUTA, "local", false, false);
         user.lastModifiedTs = 0;
         user.lastLoggedAt = 1;
         user.lastLoggedIP = "127.0.0.1";
@@ -304,7 +304,7 @@ public class DBManagerTest {
         dbManager.userDBDao.save(users);
 
         users = new ArrayList<>();
-        user = new User("test@gmail.com", "pass2", AppName.BLYNK, "local2", true, true);
+        user = new User("test@gmail.com", "pass2", AppName.LAPUTA, "local2", true, true);
         user.name = "1234";
         user.lastModifiedTs = 1;
         user.lastLoggedAt = 2;
@@ -325,7 +325,7 @@ public class DBManagerTest {
              ResultSet rs = statement.executeQuery("select * from users where email = 'test@gmail.com'")) {
             while (rs.next()) {
                 assertEquals("test@gmail.com", rs.getString("email"));
-                assertEquals(AppName.BLYNK, rs.getString("appName"));
+                assertEquals(AppName.LAPUTA, rs.getString("appName"));
                 assertEquals("local2", rs.getString("region"));
                 assertEquals("pass2", rs.getString("pass"));
                 assertEquals("1234", rs.getString("name"));
@@ -346,7 +346,7 @@ public class DBManagerTest {
     @Ignore("Ignored cause travis postgres is old and doesn't support upserts")
     public void testInsertAndGetUser() throws Exception {
         ArrayList<User> users = new ArrayList<>();
-        User user = new User("test@gmail.com", "pass", AppName.BLYNK, "local", true, true);
+        User user = new User("test@gmail.com", "pass", AppName.LAPUTA, "local", true, true);
         user.lastModifiedTs = 0;
         user.lastLoggedAt = 1;
         user.lastLoggedIP = "127.0.0.1";
@@ -366,7 +366,7 @@ public class DBManagerTest {
         User dbUser = dbUsers.get(new UserKey(user.email, user.appName));
 
         assertEquals("test@gmail.com", dbUser.email);
-        assertEquals(AppName.BLYNK, dbUser.appName);
+        assertEquals(AppName.LAPUTA, dbUser.appName);
         assertEquals("local", dbUser.region);
         assertEquals("pass", dbUser.pass);
         assertEquals(0, dbUser.lastModifiedTs);
@@ -384,7 +384,7 @@ public class DBManagerTest {
     @Ignore("Ignored cause travis postgres is old and doesn't support upserts")
     public void testInsertGetDeleteUser() throws Exception {
         ArrayList<User> users = new ArrayList<>();
-        User user = new User("test@gmail.com", "pass", AppName.BLYNK, "local", true, true);
+        User user = new User("test@gmail.com", "pass", AppName.LAPUTA, "local", true, true);
         user.lastModifiedTs = 0;
         user.lastLoggedAt = 1;
         user.lastLoggedIP = "127.0.0.1";
@@ -404,7 +404,7 @@ public class DBManagerTest {
         User dbUser = dbUsers.get(new UserKey(user.email, user.appName));
 
         assertEquals("test@gmail.com", dbUser.email);
-        assertEquals(AppName.BLYNK, dbUser.appName);
+        assertEquals(AppName.LAPUTA, dbUser.appName);
         assertEquals("local", dbUser.region);
         assertEquals("pass", dbUser.pass);
         assertEquals(0, dbUser.lastModifiedTs);

@@ -14,7 +14,7 @@ import com.laputa.server.core.model.auth.User;
 import com.laputa.server.notifications.mail.MailWrapper;
 import com.laputa.utils.FileLoaderUtil;
 import com.laputa.utils.IPUtils;
-import com.laputa.utils.validators.BlynkEmailValidator;
+import com.laputa.utils.validators.LaputaEmailValidator;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.logging.log4j.LogManager;
@@ -70,12 +70,12 @@ public class ResetPasswordLogic extends BaseHttpHandler {
                                            @FormParam("email") String email,
                                            @FormParam("appName") String appName) {
 
-        if (BlynkEmailValidator.isNotValidEmail(email)) {
+        if (LaputaEmailValidator.isNotValidEmail(email)) {
             return badRequest(email + " email has not valid format.");
         }
 
         final String trimmedEmail = email.trim().toLowerCase();
-        appName = (appName == null ? AppName.BLYNK : appName);
+        appName = (appName == null ? AppName.LAPUTA : appName);
 
         User user = userDao.getByName(trimmedEmail, appName);
 

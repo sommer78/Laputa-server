@@ -99,7 +99,7 @@ public class UserDao {
     public Map<String, Integer> getFacebookLogin() {
         Map<String, Integer> facebookLogin = new HashMap<>();
         for (User user : users.values()) {
-            facebookLogin.compute(user.isFacebookUser ? AppName.FACEBOOK : AppName.BLYNK, (k, v) -> v == null ? 1 : v++);
+            facebookLogin.compute(user.isFacebookUser ? AppName.FACEBOOK : AppName.LAPUTA, (k, v) -> v == null ? 1 : v++);
         }
         return facebookLogin;
     }

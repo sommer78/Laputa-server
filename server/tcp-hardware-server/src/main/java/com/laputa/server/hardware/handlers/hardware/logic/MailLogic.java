@@ -10,14 +10,14 @@ import com.laputa.server.core.protocol.exceptions.NotAllowedException;
 import com.laputa.server.core.protocol.model.messages.StringMessage;
 import com.laputa.server.core.session.HardwareStateHolder;
 import com.laputa.server.notifications.mail.MailWrapper;
-import com.laputa.utils.validators.BlynkEmailValidator;
+import com.laputa.utils.validators.LaputaEmailValidator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.laputa.utils.BlynkByteBufUtil.notificationError;
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.notificationError;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * Sends email from received from hardware. Via google smtp server.
@@ -84,7 +84,7 @@ public class MailLogic extends NotificationBase {
         checkIfNotificationQuotaLimitIsNotReached();
 
         //minimal validation for receiver.
-        if (BlynkEmailValidator.isNotValidEmail(to)) {
+        if (LaputaEmailValidator.isNotValidEmail(to)) {
             throw new IllegalCommandException("Invalid mail receiver.");
         }
 

@@ -68,7 +68,7 @@ public class HardwareChannelStateHandler extends ChannelInboundHandlerAdapter {
         //this is special case.
         //in case hardware quickly reconnects we do not mark it as disconnected
         //as it is already online after quick disconnect.
-        //https://github.com/blynkkk/laputa-server/issues/403
+
         boolean isHardwareConnected = session.isHardwareConnected(state.dashId, state.deviceId);
         if (device != null && !isHardwareConnected) {
             log.trace("Disconnected device id {}, dash id {}", state.deviceId, state.dashId);
@@ -99,7 +99,7 @@ public class HardwareChannelStateHandler extends ChannelInboundHandlerAdapter {
             );
         } else {
             //delayed notification
-            //https://github.com/blynkkk/laputa-server/issues/493
+
             ctx.executor().schedule(new DelayedPush(device, notification, message, dashId),
                     notification.notifyWhenOfflineIgnorePeriod, TimeUnit.MILLISECONDS);
         }

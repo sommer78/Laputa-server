@@ -9,7 +9,7 @@ import com.laputa.server.core.BaseServer;
 import com.laputa.server.core.model.HardwareInfo;
 import com.laputa.server.core.model.Profile;
 import com.laputa.server.core.protocol.model.messages.ResponseMessage;
-import com.laputa.server.core.protocol.model.messages.hardware.BlynkInternalMessage;
+import com.laputa.server.core.protocol.model.messages.hardware.LaputaInternalMessage;
 import com.laputa.server.hardware.HardwareServer;
 import com.laputa.utils.JsonParser;
 import org.junit.After;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
  *
  */
 @RunWith(MockitoJUnitRunner.class)
-public class BlynkInternalTest extends IntegrationBase {
+public class LaputaInternalTest extends IntegrationBase {
 
     private BaseServer appServer;
     private BaseServer hardwareServer;
@@ -115,7 +115,7 @@ public class BlynkInternalTest extends IntegrationBase {
         appClient.send("login " + DEFAULT_TEST_USER + " 1 Android 1.13.3");
         verify(appClient.responseMock, timeout(500)).channelRead(any(), eq(new ResponseMessage(1, OK)));
 
-        verify(clientPair.hardwareClient.responseMock, timeout(500)).channelRead(any(), eq(new BlynkInternalMessage(7777, "acon")));
+        verify(clientPair.hardwareClient.responseMock, timeout(500)).channelRead(any(), eq(new LaputaInternalMessage(7777, "acon")));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class BlynkInternalTest extends IntegrationBase {
 
         clientPair.appClient.stop().await();
 
-        verify(clientPair.hardwareClient.responseMock, timeout(500)).channelRead(any(), eq(new BlynkInternalMessage(7777, "adis")));
+        verify(clientPair.hardwareClient.responseMock, timeout(500)).channelRead(any(), eq(new LaputaInternalMessage(7777, "adis")));
     }
 
 }

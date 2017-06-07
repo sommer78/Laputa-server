@@ -1,6 +1,6 @@
 package com.laputa.utils;
 
-import com.laputa.utils.validators.BlynkEmailValidator;
+import com.laputa.utils.validators.LaputaEmailValidator;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -39,7 +39,7 @@ public class EMailValidationTest {
         };
 
         for (String email : mailList) {
-            assertFalse(email, BlynkEmailValidator.isNotValidEmail(email));
+            assertFalse(email, LaputaEmailValidator.isNotValidEmail(email));
         }
     }
 
@@ -55,7 +55,7 @@ public class EMailValidationTest {
                 //        || email.endsWith(".hshs") || email.endsWith(".aa") || email.endsWith(".cim")) {
                 //    continue;
                 //}
-                assertFalse(email, BlynkEmailValidator.isNotValidEmail(email));
+                assertFalse(email, LaputaEmailValidator.isNotValidEmail(email));
             }
         }
     }
@@ -83,7 +83,7 @@ public class EMailValidationTest {
         };
 
         for (String email : mailList) {
-            assertTrue(email, BlynkEmailValidator.isNotValidEmail(email));
+            assertTrue(email, LaputaEmailValidator.isNotValidEmail(email));
         }
     }
 

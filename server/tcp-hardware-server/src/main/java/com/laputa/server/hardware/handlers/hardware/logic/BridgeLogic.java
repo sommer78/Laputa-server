@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 import static com.laputa.utils.StateHolderUtil.getHardState;
 import static com.laputa.utils.StringUtils.split3;
 

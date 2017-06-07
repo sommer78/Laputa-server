@@ -15,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.CREATE_APP;
-import static com.laputa.utils.BlynkByteBufUtil.makeUTF8StringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeUTF8StringMessage;
 
 /**
  * The Laputa Project.
@@ -45,7 +45,7 @@ public class CreateAppLogic {
 
         App newApp = JsonParser.parseApp(appString);
 
-        newApp.id = AppName.BLYNK_LOWERCASE + StringUtils.randomString(8);
+        newApp.id = AppName.LAPUTA_LOWERCASE + StringUtils.randomString(8);
 
         newApp.validate();
 

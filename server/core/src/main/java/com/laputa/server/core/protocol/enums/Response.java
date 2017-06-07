@@ -27,7 +27,7 @@ public final class Response {
     public static final int NOTIFICATION_NOT_AUTHORIZED = 14;
     public static final int NOTIFICATION_ERROR = 15;
     //reserved
-    public static final int BLYNK_TIMEOUT = 16;
+    public static final int LAPUTA_TIMEOUT = 16;
     public static final int NO_DATA = 17;
     public static final int DEVICE_WENT_OFFLINE = 18;
     public static final int SERVER_ERROR = 19;

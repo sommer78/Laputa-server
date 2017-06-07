@@ -9,7 +9,7 @@ import com.laputa.utils.ParseUtil;
 import com.laputa.utils.StringUtils;
 import io.netty.channel.ChannelHandlerContext;
 
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * The Laputa Project.

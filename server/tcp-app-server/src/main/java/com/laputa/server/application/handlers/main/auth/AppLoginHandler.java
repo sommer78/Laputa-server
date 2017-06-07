@@ -26,7 +26,7 @@ import org.asynchttpclient.netty.handler.WebSocketHandler;
 import java.util.NoSuchElementException;
 
 import static com.laputa.server.core.protocol.enums.Response.*;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 import static com.laputa.utils.StringUtils.BODY_SEPARATOR_STRING;
 
 
@@ -68,7 +68,7 @@ public class AppLoginHandler extends SimpleChannelInboundHandler<LoginMessage> i
         } catch (NoSuchElementException e) {
             //this case possible when few login commands come at same time to different threads
             //just do nothing and ignore.
-            //https://github.com/blynkkk/laputa-server/issues/224
+
         }
     }
 
@@ -92,11 +92,11 @@ public class AppLoginHandler extends SimpleChannelInboundHandler<LoginMessage> i
                 facebookLogin(ctx, message.id, email, messageParts[1], osType, version);
             } else {
                 final String appName = messageParts[4];
-                blynkLogin(ctx, message.id, email, messageParts[1], osType, version, appName);
+                laputaLogin(ctx, message.id, email, messageParts[1], osType, version, appName);
             }
         } else {
             //todo this is for back compatibility
-            blynkLogin(ctx, message.id, email, messageParts[1], osType, version, AppName.BLYNK);
+            laputaLogin(ctx, message.id, email, messageParts[1], osType, version, AppName.LAPUTA);
         }
     }
 
@@ -120,9 +120,9 @@ public class AppLoginHandler extends SimpleChannelInboundHandler<LoginMessage> i
                             String responseBody = response.getResponseBody();
                             FacebookTokenResponse facebookTokenResponse = JsonParser.parseFacebookTokenResponse(responseBody);
                             if (email.equalsIgnoreCase(facebookTokenResponse.email)) {
-                                User user = holder.userDao.getByName(email, AppName.BLYNK);
+                                User user = holder.userDao.getByName(email, AppName.LAPUTA);
                                 if (user == null) {
-                                    user = holder.userDao.addFacebookUser(email, AppName.BLYNK);
+                                    user = holder.userDao.addFacebookUser(email, AppName.LAPUTA);
                                 }
 
                                 login(ctx, messageId, user, osType, version);
@@ -143,7 +143,7 @@ public class AppLoginHandler extends SimpleChannelInboundHandler<LoginMessage> i
                 });
     }
 
-    private void blynkLogin(ChannelHandlerContext ctx, int msgId, String email, String pass, OsType osType, String version, String appName) {
+    private void laputaLogin(ChannelHandlerContext ctx, int msgId, String email, String pass, OsType osType, String version, String appName) {
         User user = holder.userDao.getByName(email, appName);
 
         if (user == null) {
@@ -199,7 +199,7 @@ public class AppLoginHandler extends SimpleChannelInboundHandler<LoginMessage> i
         for (DashBoard dashBoard : user.profile.dashBoards) {
             if (dashBoard.isAppConnectedOn && dashBoard.isActive) {
                 log.trace("{}-{}. Sending App Connected event to hardware.", user.email, user.appName);
-                session.sendMessageToHardware(dashBoard.id, Command.BLYNK_INTERNAL, 7777, "acon");
+                session.sendMessageToHardware(dashBoard.id, Command.LAPUTA_INTERNAL, 7777, "acon");
             }
         }
         log.info("{} {}-app joined.", user.email, user.appName);

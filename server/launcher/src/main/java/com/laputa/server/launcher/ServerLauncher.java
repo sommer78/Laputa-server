@@ -113,7 +113,7 @@ public class ServerLauncher {
             System.out.println("Your Admin password is " + pass);
 
             String hash = SHA256Util.makeHash(pass, email);
-            holder.userDao.add(email, hash, AppName.BLYNK, true);
+            holder.userDao.add(email, hash, AppName.LAPUTA, true);
         }
     }
 

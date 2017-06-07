@@ -12,8 +12,8 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.laputa.server.core.protocol.enums.Command.BLYNK_INTERNAL;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.server.core.protocol.enums.Command.LAPUTA_INTERNAL;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 import static com.laputa.utils.StringUtils.BODY_SEPARATOR;
 
 /**
@@ -27,13 +27,13 @@ import static com.laputa.utils.StringUtils.BODY_SEPARATOR;
  *
  */
 @ChannelHandler.Sharable
-public class BlynkInternalLogic {
+public class LaputaInternalLogic {
 
-    private static final Logger log = LogManager.getLogger(BlynkInternalLogic.class);
+    private static final Logger log = LogManager.getLogger(LaputaInternalLogic.class);
 
     private final int hardwareIdleTimeout;
 
-    public BlynkInternalLogic(int hardwareIdleTimeout) {
+    public LaputaInternalLogic(int hardwareIdleTimeout) {
         this.hardwareIdleTimeout = hardwareIdleTimeout;
     }
 
@@ -66,7 +66,7 @@ public class BlynkInternalLogic {
         DashBoard dashBoard = state.user.profile.getDashByIdOrThrow(state.dashId);
         RTC rtc = dashBoard.getWidgetByType(RTC.class);
         if (rtc != null && ctx.channel().isWritable()) {
-            ctx.writeAndFlush(makeASCIIStringMessage(BLYNK_INTERNAL, msgId, "rtc" + BODY_SEPARATOR + rtc.getTime()), ctx.voidPromise());
+            ctx.writeAndFlush(makeASCIIStringMessage(LAPUTA_INTERNAL, msgId, "rtc" + BODY_SEPARATOR + rtc.getTime()), ctx.voidPromise());
         }
     }
 

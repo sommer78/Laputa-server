@@ -2,7 +2,7 @@ package com.laputa.server.handlers.common;
 
 import io.netty.channel.ChannelHandlerContext;
 
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * The Laputa Project.

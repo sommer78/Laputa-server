@@ -11,7 +11,7 @@ import java.util.StringJoiner;
 
 import static com.laputa.server.core.protocol.enums.Command.APP_SYNC;
 import static com.laputa.server.core.protocol.enums.Command.HARDWARE;
-import static com.laputa.utils.BlynkByteBufUtil.makeUTF8StringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeUTF8StringMessage;
 import static com.laputa.utils.StringUtils.prependDashIdAndDeviceId;
 
 /**

@@ -11,7 +11,7 @@ import com.laputa.utils.TokenGeneratorUtil;
 import io.netty.channel.ChannelHandlerContext;
 
 import static com.laputa.server.core.protocol.enums.Command.GET_TOKEN;
-import static com.laputa.utils.BlynkByteBufUtil.makeASCIIStringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeASCIIStringMessage;
 
 /**
  * The Laputa Project.

@@ -74,7 +74,7 @@ public class CommandParser {
             case "hardsync" :
                 return HARDWARE_SYNC;
             case "internal" :
-                return BLYNK_INTERNAL;
+                return LAPUTA_INTERNAL;
 
             case "createdevice" :
                 return CREATE_DEVICE;

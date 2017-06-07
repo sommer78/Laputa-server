@@ -87,8 +87,8 @@ public class MessageFactory {
                 return new AddPushToken(messageId, body);
             case HARDWARE_SYNC :
                 return new HardwareSyncMessage(messageId, body);
-            case BLYNK_INTERNAL:
-                return new BlynkInternalMessage(messageId, body);
+            case LAPUTA_INTERNAL:
+                return new LaputaInternalMessage(messageId, body);
 
             case CREATE_WIDGET :
                 return new CreateWidget(messageId, body);

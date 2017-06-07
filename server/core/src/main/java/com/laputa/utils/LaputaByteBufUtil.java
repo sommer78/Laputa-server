@@ -16,7 +16,7 @@ import static com.laputa.server.core.protocol.model.messages.MessageBase.HEADER_
  * Created by Sommer
  * Created on 10.03.16.
  */
-public class BlynkByteBufUtil {
+public class LaputaByteBufUtil {
 
     public static final ByteBufAllocator ALLOCATOR = ByteBufAllocator.DEFAULT;
 

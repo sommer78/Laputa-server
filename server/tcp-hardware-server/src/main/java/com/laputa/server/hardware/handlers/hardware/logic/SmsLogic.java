@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Response.NOTIFICATION_ERROR;
 import static com.laputa.server.core.protocol.enums.Response.NOTIFICATION_NOT_AUTHORIZED;
-import static com.laputa.utils.BlynkByteBufUtil.makeResponse;
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.makeResponse;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * Sends tweets from hardware.

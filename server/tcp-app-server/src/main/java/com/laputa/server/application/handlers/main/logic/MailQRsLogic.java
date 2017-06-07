@@ -24,8 +24,8 @@ import net.glxn.qrgen.javase.QRCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.laputa.utils.BlynkByteBufUtil.notificationError;
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.notificationError;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * Sends email from application.

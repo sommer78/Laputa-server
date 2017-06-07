@@ -53,7 +53,7 @@ public class IDEAuthLogic extends BaseHttpHandler {
             return badRequest();
         }
 
-        User user = userDao.getByName(email, AppName.BLYNK);
+        User user = userDao.getByName(email, AppName.LAPUTA);
 
         if (user == null) {
             String userServer = redisClient.getServerByUser(email);

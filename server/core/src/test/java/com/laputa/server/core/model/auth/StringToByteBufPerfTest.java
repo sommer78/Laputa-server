@@ -1,6 +1,6 @@
 package com.laputa.server.core.model.auth;
 
-import com.laputa.utils.BlynkByteBufUtil;
+import com.laputa.utils.LaputaByteBufUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -38,10 +38,10 @@ public class StringToByteBufPerfTest {
     }
 
     @Benchmark
-    public ByteBuf optimizedBlynkWay() {
+    public ByteBuf optimizedLaputaWay() {
         ByteBuf byteBuf = null;
         try {
-            byteBuf = BlynkByteBufUtil.makeUTF8StringMessage((short) 1, 1, data);
+            byteBuf = LaputaByteBufUtil.makeUTF8StringMessage((short) 1, 1, data);
             return byteBuf;
         } finally {
             if (byteBuf != null) {
@@ -51,7 +51,7 @@ public class StringToByteBufPerfTest {
     }
 
     @Benchmark
-    public ByteBuf blynkWay() {
+    public ByteBuf laputaWay() {
         ByteBuf byteBuf = null;
         try {
             byteBuf = makeStringMessage((short) 1, 1, data);
@@ -64,7 +64,7 @@ public class StringToByteBufPerfTest {
     }
 
     public static ByteBuf makeStringMessage(short cmd, int msgId, String data) {
-        return BlynkByteBufUtil.makeBinaryMessage(cmd, msgId, data.getBytes(StandardCharsets.UTF_8));
+        return LaputaByteBufUtil.makeBinaryMessage(cmd, msgId, data.getBytes(StandardCharsets.UTF_8));
     }
 
 }

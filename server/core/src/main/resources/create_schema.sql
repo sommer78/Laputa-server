@@ -1,23 +1,23 @@
-CREATE DATABASE laputa;
+# CREATE DATABASE laputa;
 
-\connect laputa
-
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE users (
-  email text NOT NULL,
-  appName text NOT NULL,
-  region text,
-  name text,
-  pass text,
+  email varchar(255) NOT NULL,
+  appName varchar(255) NOT NULL,
+  region text(65535),
+  name text(65535),
+  pass text(65535),
   last_modified timestamp,
   last_logged timestamp,
-  last_logged_ip text,
+  last_logged_ip text(65535),
   is_facebook_user bool,
   is_super_admin bool DEFAULT FALSE,
   energy int,
-  json text,
+  json text(65535),
   PRIMARY KEY(email, appName)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `redeem`;
 CREATE TABLE redeem (
   token character(32) PRIMARY KEY,
   company text,
@@ -26,163 +26,159 @@ CREATE TABLE redeem (
   email text,
   version integer NOT NULL DEFAULT 1,
   ts timestamp
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE flashed_tokens (
   token character(32),
-  app_name text,
+  app_name  varchar(255),
   email text,
-  project_id int4 NOT NULL,
-  device_id int4 NOT NULL,
+  project_id bigint(64) NOT NULL,
+  device_id bigint(64) NOT NULL,
   is_activated boolean DEFAULT FALSE,
   ts timestamp,
   PRIMARY KEY(token, app_name)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE purchase (
-  email text,
+  email  varchar(255),
   reward integer NOT NULL,
-  transactionId text,
-  price float8,
+  transactionId  varchar(255),
+  price  double(16,6),
   ts timestamp NOT NULL DEFAULT NOW(),
   PRIMARY KEY (email, transactionId)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_raw_data (
-  email text,
-  project_id int4,
-  device_id int4,
-  pin int2,
+  email  varchar(255),
+  project_id bigint(64),
+  device_id bigint(64),
+  pin int(2) ,
   pinType char,
   ts timestamp,
   stringValue text,
-  doubleValue float8,
+  doubleValue  double(16,6),
 
   PRIMARY KEY (email, project_id, device_id, pin, pinType, ts)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_average_minute (
-  email text,
-  project_id int4,
-  device_id int4,
-  pin int2,
+  email  varchar(255),
+  project_id bigint(64),
+  device_id bigint(64),
+  pin int(2) ,
   pinType char,
   ts timestamp,
-  value float8,
+  value  double(16,6),
   PRIMARY KEY (email, project_id, device_id, pin, pinType, ts)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_average_hourly (
-  email text,
-  project_id int4,
-  device_id int4,
-  pin int2,
+  email  varchar(255),
+  project_id bigint(64),
+  device_id bigint(64),
+  pin int(2) ,
   pinType char,
   ts timestamp,
-  value float8,
+  value  double(16,6),
   PRIMARY KEY (email, project_id, device_id, pin, pinType, ts)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_average_daily (
-  email text,
-  project_id int4,
-  device_id int4,
-  pin int2,
+  email  varchar(255),
+  project_id bigint(64),
+  device_id bigint(64),
+  pin int(2) ,
   pinType char,
   ts timestamp,
-  value float8,
+  value  double(16,6),
   PRIMARY KEY (email, project_id, device_id, pin, pinType, ts)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_app_stat_minute (
-  region text,
+  region  varchar(255),
   ts timestamp,
-  active int4,
-  active_week int4,
-  active_month int4,
-  minute_rate int4,
-  connected int4,
-  online_apps int4,
-  online_hards int4,
-  total_online_apps int4,
-  total_online_hards int4,
-  registrations int4,
+  active bigint(64),
+  active_week bigint(64),
+  active_month bigint(64),
+  minute_rate bigint(64),
+  connected bigint(64),
+  online_apps bigint(64),
+  online_hards bigint(64),
+  total_online_apps bigint(64),
+  total_online_hards bigint(64),
+  registrations bigint(64),
   PRIMARY KEY (region, ts)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_app_command_stat_minute (
-  region text,
+  region  varchar(255),
   ts timestamp,
-  response int4,
-  register int4,
-  login int4,
-  load_profile int4,
-  app_sync int4,
-  sharing int4,
-  get_token int4,
-  ping int4,
-  activate int4,
-  deactivate int4,
-  refresh_token int4,
-  get_graph_data int4,
-  export_graph_data int4,
-  set_widget_property int4,
-  bridge int4,
-  hardware int4,
-  get_share_dash int4,
-  get_share_token int4,
-  refresh_share_token int4,
-  share_login int4,
-  create_project int4,
-  update_project int4,
-  delete_project int4,
-  hardware_sync int4,
-  internal int4,
-  sms int4,
-  tweet int4,
-  email int4,
-  push int4,
-  add_push_token int4,
-  create_widget int4,
-  update_widget int4,
-  delete_widget int4,
-  create_device int4,
-  update_device int4,
-  delete_device int4,
-  get_devices int4,
-  create_tag int4,
-  update_tag int4,
-  delete_tag int4,
-  get_tags int4,
-  add_energy int4,
-  get_energy int4,
-  get_server int4,
-  connect_redirect int4,
-  web_sockets int4,
-  eventor int4,
-  webhooks int4,
-  appTotal int4,
-  hardTotal int4,
+  response bigint(64),
+  register bigint(64),
+  login bigint(64),
+  load_profile bigint(64),
+  app_sync bigint(64),
+  sharing bigint(64),
+  get_token bigint(64),
+  ping bigint(64),
+  activate bigint(64),
+  deactivate bigint(64),
+  refresh_token bigint(64),
+  get_graph_data bigint(64),
+  export_graph_data bigint(64),
+  set_widget_property bigint(64),
+  bridge bigint(64),
+  hardware bigint(64),
+  get_share_dash bigint(64),
+  get_share_token bigint(64),
+  refresh_share_token bigint(64),
+  share_login bigint(64),
+  create_project bigint(64),
+  update_project bigint(64),
+  delete_project bigint(64),
+  hardware_sync bigint(64),
+  internal bigint(64),
+  sms bigint(64),
+  tweet bigint(64),
+  email bigint(64),
+  push bigint(64),
+  add_push_token bigint(64),
+  create_widget bigint(64),
+  update_widget bigint(64),
+  delete_widget bigint(64),
+  create_device bigint(64),
+  update_device bigint(64),
+  delete_device bigint(64),
+  get_devices bigint(64),
+  create_tag bigint(64),
+  update_tag bigint(64),
+  delete_tag bigint(64),
+  get_tags bigint(64),
+  add_energy bigint(64),
+  get_energy bigint(64),
+  get_server bigint(64),
+  connect_redirect bigint(64),
+  web_sockets bigint(64),
+  eventor bigint(64),
+  webhooks bigint(64),
+  appTotal bigint(64),
+  hardTotal bigint(64),
 
   PRIMARY KEY (region, ts)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE reporting_http_command_stat_minute (
-  region text,
+  region  varchar(255),
   ts timestamp,
-  is_hardware_connected int4,
-  is_app_connected int4,
-  get_pin_data int4,
-  update_pin int4,
-  email int4,
-  push int4,
-  get_project int4,
-  qr int4,
-  get_history_pin_data int4,
-  total int4,
+  is_hardware_connected bigint(64),
+  is_app_connected bigint(64),
+  get_pin_data bigint(64),
+  update_pin bigint(64),
+  email bigint(64),
+  push bigint(64),
+  get_project bigint(64),
+  qr bigint(64),
+  get_history_pin_data bigint(64),
+  total bigint(64),
   PRIMARY KEY (region, ts)
-);
-
-create user test with password 'test';
-GRANT CONNECT ON DATABASE laputa TO test;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO test;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

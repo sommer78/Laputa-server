@@ -26,7 +26,7 @@ public class HardwareHandler extends BaseSimpleChannelInboundHandler<StringMessa
     private final TwitLogic tweet;
     private final SmsLogic smsLogic;
     private final SetWidgetPropertyLogic propertyLogic;
-    private final BlynkInternalLogic info;
+    private final LaputaInternalLogic info;
 
     public HardwareHandler(Holder holder, HardwareStateHolder stateHolder) {
         super(StringMessage.class, holder.limits);
@@ -38,7 +38,7 @@ public class HardwareHandler extends BaseSimpleChannelInboundHandler<StringMessa
         this.tweet = new TwitLogic(holder.blockingIOProcessor, holder.twitterWrapper, holder.limits.NOTIFICATION_PERIOD_LIMIT_SEC);
         this.smsLogic = new SmsLogic(holder.smsWrapper, holder.limits.NOTIFICATION_PERIOD_LIMIT_SEC);
         this.propertyLogic = new SetWidgetPropertyLogic(holder.sessionDao);
-        this.info = new BlynkInternalLogic(holder.limits.HARDWARE_IDLE_TIMEOUT);
+        this.info = new LaputaInternalLogic(holder.limits.HARDWARE_IDLE_TIMEOUT);
 
         this.state = stateHolder;
     }
@@ -70,7 +70,7 @@ public class HardwareHandler extends BaseSimpleChannelInboundHandler<StringMessa
             case HARDWARE_SYNC:
                 HardwareSyncLogic.messageReceived(ctx, state, msg);
                 break;
-            case BLYNK_INTERNAL:
+            case LAPUTA_INTERNAL:
                 info.messageReceived(ctx, state, msg);
                 break;
             case SET_WIDGET_PROPERTY:

@@ -29,7 +29,7 @@ public class ProjectTokenGenerator {
         TokenManager tokenManager = new TokenManager(new ConcurrentHashMap<>(), null, null, "");
         String email = "dmitriy@laputa.cc";
         String pass = "b";
-        String appName = AppName.BLYNK;
+        String appName = AppName.LAPUTA;
         User user = new User(email, SHA256Util.makeHash(pass, email), appName, "local", false, false);
         user.purchaseEnergy(98000);
 

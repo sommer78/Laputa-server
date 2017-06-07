@@ -32,21 +32,24 @@ public class UserDBDao {
         this.ds = ds;
     }
 
-    public int getDBVersion() throws Exception {
+    public String getDBVersion() throws Exception {
         ResultSet rs = null;
-        int dbVersion = 0;
+        String dbVersion = "";
         try (Connection connection = ds.getConnection();
              Statement statement = connection.createStatement()) {
 
-            rs = statement.executeQuery("SELECT current_setting('server_version_num')");
+            rs = statement.executeQuery("SELECT  version()");
             rs.next();
-            dbVersion = rs.getInt(1);
+            dbVersion = rs.getString(1);
+            log.debug("dbVersion :{"+dbVersion+"}");
+
             connection.commit();
         } finally {
             if (rs != null) {
                 rs.close();
             }
         }
+
         return dbVersion;
     }
 

@@ -12,7 +12,7 @@ import io.netty.channel.ChannelHandlerContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 
 /**
  * The Laputa Project.

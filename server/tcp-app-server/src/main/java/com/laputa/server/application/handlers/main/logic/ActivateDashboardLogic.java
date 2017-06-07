@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.HARDWARE;
 import static com.laputa.utils.AppStateHolderUtil.getAppState;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 
 /**
  * The Laputa Project.

@@ -85,14 +85,14 @@ public class ReportingWorkerTest {
     public void testFailure() throws IOException {
         User user = new User();
         user.email = "test";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
         ReportingWorker reportingWorker = new ReportingWorker(reportingDaoMock, reportingFolder, new DBManager(blockingIOProcessor, true));
 
         ConcurrentHashMap<AggregationKey, AggregationValue> map = new ConcurrentHashMap<>();
 
         long ts = getTS() / AverageAggregatorProcessor.HOUR;
 
-        AggregationKey aggregationKey = new AggregationKey("ddd\0+123@gmail.com", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
+        AggregationKey aggregationKey = new AggregationKey("ddd\0+123@gmail.com", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
         AggregationValue aggregationValue = new AggregationValue();
         aggregationValue.update(100);
 
@@ -108,20 +108,20 @@ public class ReportingWorkerTest {
     public void testStore() throws IOException {
         User user = new User();
         user.email = "test";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
         ReportingWorker reportingWorker = new ReportingWorker(reportingDaoMock, reportingFolder, new DBManager(blockingIOProcessor, true));
 
         ConcurrentHashMap<AggregationKey, AggregationValue> map = new ConcurrentHashMap<>();
 
         long ts = getTS() / AverageAggregatorProcessor.HOUR;
 
-        AggregationKey aggregationKey = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
+        AggregationKey aggregationKey = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
         AggregationValue aggregationValue = new AggregationValue();
         aggregationValue.update(100);
-        AggregationKey aggregationKey2 = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 1);
+        AggregationKey aggregationKey2 = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 1);
         AggregationValue aggregationValue2 = new AggregationValue();
         aggregationValue2.update(150.54);
-        AggregationKey aggregationKey3 = new AggregationKey("test2", AppName.BLYNK, 2, 0, PinType.ANALOG.pintTypeChar, (byte) 2, ts);
+        AggregationKey aggregationKey3 = new AggregationKey("test2", AppName.LAPUTA, 2, 0, PinType.ANALOG.pintTypeChar, (byte) 2, ts);
         AggregationValue aggregationValue3 = new AggregationValue();
         aggregationValue3.update(200);
 
@@ -153,7 +153,7 @@ public class ReportingWorkerTest {
 
         User user2 = new User();
         user2.email = "test2";
-        user2.appName = AppName.BLYNK;
+        user2.appName = AppName.LAPUTA;
         data = ReportingDao.getByteBufferFromDisk(reportingFolder, user2, 2, 0, PinType.ANALOG, (byte) 2, 1, GraphType.HOURLY);
         assertNotNull(data);
         data.flip();
@@ -170,13 +170,13 @@ public class ReportingWorkerTest {
 
         long ts = getTS() / AverageAggregatorProcessor.HOUR;
 
-        AggregationKey aggregationKey = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
+        AggregationKey aggregationKey = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
         AggregationValue aggregationValue = new AggregationValue();
         aggregationValue.update(100);
-        AggregationKey aggregationKey2 = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 1);
+        AggregationKey aggregationKey2 = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 1);
         AggregationValue aggregationValue2 = new AggregationValue();
         aggregationValue2.update(150.54);
-        AggregationKey aggregationKey3 = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 2);
+        AggregationKey aggregationKey3 = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 2);
         AggregationValue aggregationValue3 = new AggregationValue();
         aggregationValue3.update(200);
 
@@ -196,7 +196,7 @@ public class ReportingWorkerTest {
 
         User user = new User();
         user.email = "test";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
 
         //take less
         ByteBuffer data = ReportingDao.getByteBufferFromDisk(reportingFolder, user, 1, 0, PinType.ANALOG, (byte) 1, 1, GraphType.HOURLY);
@@ -233,13 +233,13 @@ public class ReportingWorkerTest {
 
         long ts = getTS() / AverageAggregatorProcessor.HOUR;
 
-        AggregationKey aggregationKey = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
+        AggregationKey aggregationKey = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts);
         AggregationValue aggregationValue = new AggregationValue();
         aggregationValue.update(100);
-        AggregationKey aggregationKey2 = new AggregationKey("test", AppName.BLYNK, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 1);
+        AggregationKey aggregationKey2 = new AggregationKey("test", AppName.LAPUTA, 1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, ts - 1);
         AggregationValue aggregationValue2 = new AggregationValue();
         aggregationValue2.update(150.54);
-        AggregationKey aggregationKey3 = new AggregationKey("test2", AppName.BLYNK, 2, 0, PinType.ANALOG.pintTypeChar, (byte) 2, ts);
+        AggregationKey aggregationKey3 = new AggregationKey("test2", AppName.LAPUTA, 2, 0, PinType.ANALOG.pintTypeChar, (byte) 2, ts);
         AggregationValue aggregationValue3 = new AggregationValue();
         aggregationValue3.update(200);
 
@@ -259,7 +259,7 @@ public class ReportingWorkerTest {
 
         User user = new User();
         user.email = "test";
-        user.appName = AppName.BLYNK;
+        user.appName = AppName.LAPUTA;
 
         new ReportingDao(reportingFolder, properties).delete(user, 1, 0, PinType.ANALOG, (byte) 1);
         assertFalse(Files.exists(Paths.get(reportingFolder, "test", generateFilename(1, 0, PinType.ANALOG.pintTypeChar, (byte) 1, GraphType.HOURLY))));

@@ -18,7 +18,7 @@ import java.util.Set;
 
 import static com.laputa.server.core.protocol.enums.Command.RESPONSE;
 import static com.laputa.server.core.protocol.enums.Response.DEVICE_WENT_OFFLINE;
-import static com.laputa.utils.BlynkByteBufUtil.makeUTF8StringMessage;
+import static com.laputa.utils.LaputaByteBufUtil.makeUTF8StringMessage;
 import static com.laputa.utils.StateHolderUtil.*;
 import static com.laputa.utils.StringUtils.DEVICE_SEPARATOR;
 import static com.laputa.utils.StringUtils.prependDashIdAndDeviceId;

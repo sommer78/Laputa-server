@@ -21,7 +21,7 @@ import java.util.Arrays;
 import static com.laputa.server.core.protocol.enums.Command.GET_GRAPH_DATA_RESPONSE;
 import static com.laputa.server.core.protocol.enums.Response.NO_DATA;
 import static com.laputa.server.core.protocol.enums.Response.SERVER_ERROR;
-import static com.laputa.utils.BlynkByteBufUtil.*;
+import static com.laputa.utils.LaputaByteBufUtil.*;
 import static com.laputa.utils.ByteUtils.compress;
 import static com.laputa.utils.StringUtils.split2Device;
 

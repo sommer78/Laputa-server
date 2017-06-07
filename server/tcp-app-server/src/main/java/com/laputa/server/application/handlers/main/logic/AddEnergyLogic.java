@@ -9,7 +9,7 @@ import com.laputa.server.db.model.Purchase;
 import com.laputa.utils.ParseUtil;
 import io.netty.channel.ChannelHandlerContext;
 
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 import static com.laputa.utils.StringUtils.split2;
 
 

@@ -13,8 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.SET_WIDGET_PROPERTY;
-import static com.laputa.utils.BlynkByteBufUtil.illegalCommandBody;
-import static com.laputa.utils.BlynkByteBufUtil.ok;
+import static com.laputa.utils.LaputaByteBufUtil.illegalCommandBody;
+import static com.laputa.utils.LaputaByteBufUtil.ok;
 import static com.laputa.utils.StringUtils.split3;
 
 /**

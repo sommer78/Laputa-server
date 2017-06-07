@@ -46,7 +46,7 @@ public class User {
         this.profile = new Profile();
         this.energy = INITIAL_ENERGY_AMOUNT;
         this.isFacebookUser = false;
-        this.appName = AppName.BLYNK;
+        this.appName = AppName.LAPUTA;
     }
 
     public User(String email, String pass, String appName, String region, boolean isFacebookUser, boolean isSuperAdmin) {
@@ -66,7 +66,7 @@ public class User {
     }
 
     public void subtractEnergy(int price) {
-        if (AppName.BLYNK.equals(appName) && price > energy) {
+        if (AppName.LAPUTA.equals(appName) && price > energy) {
             throw new EnergyLimitException("Not enough energy.");
         }
         //non-atomic. we are fine with that

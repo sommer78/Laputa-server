@@ -21,8 +21,8 @@ import org.apache.logging.log4j.Logger;
 
 import static com.laputa.server.core.protocol.enums.Command.APP_SYNC;
 import static com.laputa.server.core.protocol.enums.Command.HARDWARE;
-import static com.laputa.utils.BlynkByteBufUtil.deviceNotInNetwork;
-import static com.laputa.utils.BlynkByteBufUtil.illegalCommandBody;
+import static com.laputa.utils.LaputaByteBufUtil.deviceNotInNetwork;
+import static com.laputa.utils.LaputaByteBufUtil.illegalCommandBody;
 import static com.laputa.utils.StringUtils.*;
 
 /**

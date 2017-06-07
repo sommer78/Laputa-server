@@ -102,9 +102,9 @@ public class DBManager implements Closeable {
 
     private void checkDBVersion() {
         try {
-            int dbVersion = userDBDao.getDBVersion();
-            if (dbVersion < 90500) {
-                log.error("Current Postgres version is lower than minimum required 9.5.0 version. PLEASE UPDATE YOUR DB.");
+            String dbVersion = userDBDao.getDBVersion();
+            if (dbVersion.contains("5.1")) {
+                log.error("Current mysql version is lower than minimum required 5.1.7 version. PLEASE UPDATE YOUR DB.");
             }
         } catch (Exception e) {
             log.error("Error getting DB version.", e.getMessage());

@@ -44,8 +44,8 @@ public class IDEAuthLogicTest {
     @Before
     public void setUp() throws Exception {
         ideAuthLogic = new IDEAuthLogic(userDao, redisClient);
-        when(userDao.getByName(TEST_USER1, AppName.BLYNK)).thenReturn(user);
-        when(userDao.getByName(TEST_USER2, AppName.BLYNK)).thenReturn(null);
+        when(userDao.getByName(TEST_USER1, AppName.LAPUTA)).thenReturn(user);
+        when(userDao.getByName(TEST_USER2, AppName.LAPUTA)).thenReturn(null);
         when(redisClient.getServerByUser(TEST_USER2)).thenReturn(SERVER_NAME);
     }
 

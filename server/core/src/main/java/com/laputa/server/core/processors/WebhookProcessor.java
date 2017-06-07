@@ -138,9 +138,9 @@ public class WebhookProcessor extends NotificationBase {
         globalStats.mark(WEB_HOOKS);
     }
 
-    private String format(String data, String triggerValue, boolean doBlynkCheck) {
+    private String format(String data, String triggerValue, boolean doLaputaCheck) {
         //this is an ugly hack to make it work with Laputa HTTP API.
-        if (doBlynkCheck || !data.toLowerCase().contains("/pin/v")) {
+        if (doLaputaCheck || !data.toLowerCase().contains("/pin/v")) {
             data = PIN_PATTERN.matcher(data).replaceFirst(triggerValue);
         }
         data = data.replace("%s", triggerValue);

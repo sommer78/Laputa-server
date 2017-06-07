@@ -23,7 +23,7 @@ public final class UserKey {
     public UserKey(String email, String appName) {
         this.email = email;
         if (appName == null) {
-            this.appName = AppName.BLYNK;
+            this.appName = AppName.LAPUTA;
         } else {
             this.appName = appName;
         }
