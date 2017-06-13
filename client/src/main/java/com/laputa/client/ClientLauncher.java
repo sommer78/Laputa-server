@@ -1,5 +1,6 @@
 package com.laputa.client;
 
+import com.alibaba.fastjson.JSON;
 import com.laputa.client.core.ActiveHardwareClient;
 import com.laputa.client.core.AppClient;
 import com.laputa.client.core.HardwareClient;
@@ -35,8 +36,9 @@ public class ClientLauncher {
 
     public static void main(String[] args) throws ParseException {
         CommandLine cmd = new DefaultParser().parse(options, args);
-
+        System.out.println(JSON.toJSONString(cmd));
         ClientMode mode = ClientMode.parse(cmd.getOptionValue("mode", ClientMode.HARDWARE.name()));
+        mode =ClientMode.HARDWARE;
         String host = cmd.getOptionValue("host", DEFAULT_HOST);
         int port = ParseUtil.parseInt(cmd.getOptionValue("port",
                         (mode == ClientMode.APP ? String.valueOf(DEFAULT_APPLICATION_PORT) : String.valueOf(DEFAULT_HARDWARE_PORT)))

@@ -73,8 +73,8 @@ public class AssignTokenTest extends IntegrationBase {
         String token = UUID.randomUUID().toString().replace("-", "");
         FlashedToken flashedToken = new FlashedToken("test@laputa.cc", token, AppName.LAPUTA, 1, 0);
         list[0] = flashedToken;
-        dbManager.insertFlashedTokens(list);
-
+        boolean dbInfo =        dbManager.insertFlashedTokens(list);
+        System.out.println("dbinfo: "+dbInfo+"    token:"+token);
         clientPair.appClient.send("assignToken 1\0" + flashedToken.token);
         verify(clientPair.appClient.responseMock, timeout(500)).channelRead(any(), eq(ok(1)));
 

@@ -25,10 +25,10 @@ public class QRGenerator {
         DBManager dbManager = new DBManager("db.properties", new BlockingIOProcessor(4, 100), true);
         List<Redeem> redeems;
 
-        redeems = generateQR(361, "/home/doom369/QR/blynk25", "Laputa", 25000);
+        redeems = generateQR(361, "E:\\working_idea\\Laputa-server\\laputa_data", "Laputa", 25000);
         dbManager.insertRedeems(redeems);
 
-        redeems = generateQR(1950, "/home/doom369/QR/blynk100", "Laputa", 100000);
+        redeems = generateQR(1950, "/home/doom369/QR/laputa100", "Laputa", 100000);
         dbManager.insertRedeems(redeems);
 
         redeems = generateQR(90, "/home/doom369/QR/bluz", "Bluz", 100000);
